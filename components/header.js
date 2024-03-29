@@ -30,11 +30,9 @@ import ThemeToggle from "./theme-toggle";
 import {
   BookmarkIcon,
   BookOpenIcon,
-  ChevronDownIcon,
-  LightningBoltIcon,
-  MenuIcon,
-  DotsHorizontalIcon,
-} from "@heroicons/react/solid";
+  BoltIcon,
+} from "@heroicons/react/24/solid";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import AvatarNavigation from "./avatar-navigation";
 
@@ -54,7 +52,7 @@ function NavLink(props) {
   }
 
   return (
-    <NextLink href={href} passHref>
+    <NextLink href={href} passHref legacyBehavior>
       <Button
         aria-current={isActive ? "page" : undefined}
         variant="ghost"
@@ -78,6 +76,16 @@ function NavLink(props) {
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const closeTimeoutRef = React.useRef();
+
+  const delayedClose = () => {
+    closeTimeoutRef.current = setTimeout(onClose, 200); // delay in ms
+  };
+
+  const cancelDelayedClose = () => {
+    clearTimeout(closeTimeoutRef.current);
+  };
+
   return (
     <Box
       bg={useColorModeValue("white", "neutralD.100")}
@@ -85,42 +93,43 @@ const Header = () => {
       position="fixed"
       w="100%"
       zIndex={99}
-      borderBottomWidth="2px"
+      borderBottomWidth="1px"
       borderBottomColor={useColorModeValue("neutral.400", "neutralD.400")}
-      shadow="0 0 10px 0 rgba(0,0,0, 0.035);"
+      shadow="0 0 10px 0 rgba(0,0,0, 0.025);"
     >
       <Container>
         <VStack align="start" spacing={0}>
           <HStack justify="space-between" w="100%" h={16}>
             <AvatarNavigation />
             <HStack ml={-4} spacing={2}>
-              <NavLink href="/about" name="About" />
               <NavLink href="/blog" name="Blog" />
-              <NavLink href="/newsletter" name="Newsletter" />
-              <Menu isOpen={isOpen}>
+              <NavLink href="/about" name="About" />
+              <Menu isOpen={isOpen} onClose={onClose}>
                 <MenuButton
-                  bg={useColorModeValue("neutral.100", "neutralD.300")}
+                  onMouseOver={onOpen}
+                  onClick={isOpen ? onClose : onOpen}
+                  onMouseLeave={delayedClose}
+                  onMouseEnter={cancelDelayedClose}
+                  as={Button}
+                  rightIcon={<Icon as={ChevronDownIcon} />}
+                  cursor="unset"
+                  bg={useColorModeValue("white", "neutralD.100")}
                   _hover={{
-                    bg: useColorModeValue("neutral.200", "neutralD.400"),
+                    bg: useColorModeValue("neutral.200", "neutralD.200"),
                   }}
-                  onMouseEnter={onOpen}
-                  onMouseLeave={onClose}
-                  rounded="full"
+                  _active={useColorModeValue("neutral.200", "neutralD.200")}
                 >
-                  <IconButton
-                    aria-label="Addtional Menu"
-                    variant="ghost"
-                    icon={<Icon as={DotsHorizontalIcon} />}
-                  />
+                  Lists
                 </MenuButton>
                 <MenuList
                   bg={useColorModeValue("white", "neutralD.100")}
                   borderColor={useColorModeValue("neutral.400", "neutralD.400")}
-                  onMouseEnter={onOpen}
                   onMouseLeave={onClose}
+                  onMouseEnter={cancelDelayedClose}
                 >
-                  <Link href="/books">
+                  <Link href="/books" legacyBehavior>
                     <MenuItem
+                      bg={useColorModeValue("white", "neutralD.100")}
                       _hover={{
                         bg: useColorModeValue("neutral.200", "neutralD.200"),
                       }}
@@ -135,8 +144,9 @@ const Header = () => {
                       </HStack>
                     </MenuItem>
                   </Link>
-                  <Link href="/bookmarks">
+                  <Link href="/bookmarks" legacyBehavior>
                     <MenuItem
+                      bg={useColorModeValue("white", "neutralD.100")}
                       _hover={{
                         bg: useColorModeValue("neutral.200", "neutralD.200"),
                       }}
@@ -151,15 +161,16 @@ const Header = () => {
                       </HStack>
                     </MenuItem>
                   </Link>
-                  <Link href="/tools">
+                  <Link href="/tools" legacyBehavior>
                     <MenuItem
+                      bg={useColorModeValue("white", "neutralD.100")}
                       _hover={{
                         bg: useColorModeValue("neutral.200", "neutralD.200"),
                       }}
                     >
                       <HStack>
                         <Icon
-                          as={LightningBoltIcon}
+                          as={BoltIcon}
                           size={18}
                           color={useColorModeValue("blue.500", "blue.200")}
                         />

@@ -1,5 +1,5 @@
 import { chakra, useColorMode, useColorModeValue } from "@chakra-ui/react";
-import BaseHighlight, { defaultProps } from "prism-react-renderer";
+import { Highlight as BaseHighlight } from "prism-react-renderer";
 import { prismDark, prismLight } from "./themes";
 
 import React from "react";
@@ -24,17 +24,8 @@ const calculateLinesToHighlight = (meta) => {
   };
 };
 
-function Highlight({
-  codeString,
-  language,
-  metastring,
-  showLines,
-  ln,
-  ...props
-}) {
+function Highlight({ codeString, language, showLines, ln, ...props }) {
   const baseTheme = useColorModeValue(prismLight, prismDark);
-
-  console.log("baseTheme →", baseTheme.plain);
 
   const { colorMode } = useColorMode();
 
@@ -51,20 +42,15 @@ function Highlight({
   const shouldHighlightLine = calculateLinesToHighlight(ln);
 
   return (
-    <BaseHighlight
-      {...defaultProps}
-      code={codeString}
-      language={language}
-      theme={customTheme}
-    >
+    <BaseHighlight code={codeString} language={language} theme={customTheme}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <chakra.div data-language={language} py={2} overflowX="auto">
+        <chakra.div data-language={language} overflowX="auto">
           <pre className={className} style={style}>
-            {tokens.splice(0, tokens.length - 1).map((line, i) => {
+            {tokens.map((line, i) => {
               const lineProps = getLineProps({ line, key: i });
               return (
                 <chakra.div
-                  px={4}
+                  px={2}
                   mr={4}
                   bg={
                     shouldHighlightLine(i)
@@ -81,7 +67,7 @@ function Highlight({
                       : undefined
                   }
                   _hover={{
-                    bg: colorMode === "light" ? "gray.50" : "gray.700",
+                    bg: colorMode === "light" ? "neutral.100" : "neutralD.200",
                   }}
                   {...lineProps}
                 >

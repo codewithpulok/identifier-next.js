@@ -31,7 +31,7 @@ import {
   TwitterLogo,
   YoutubeLogo,
 } from "phosphor-react";
-import { MailIcon, MenuIcon } from "@heroicons/react/solid";
+import { EnvelopeIcon, Bars3Icon } from "@heroicons/react/24/solid";
 import { useForm } from "react-hook-form";
 import MobileMenuButton from "./mobile-menu-button";
 import MobileMenuItem from "./mobile-menu-item";
@@ -46,8 +46,12 @@ const MobileMenuToggle = ({ mobile }) => {
     register,
     handleSubmit,
     watch,
-    errors,
-    formState: { isSubmitting, isSubmitSuccessful },
+
+    formState: {
+      isSubmitting,
+      isSubmitSuccessful,
+      errors,
+    },
   } = useForm();
   const onSubmit = async (data) => {
     await sendSuggestion(data);
@@ -56,7 +60,7 @@ const MobileMenuToggle = ({ mobile }) => {
   return (
     <Box>
       <Tooltip label="Newsletter">
-        <MobileMenuButton label="Menu" icon={<MenuIcon />} onClick={onOpen} />
+        <MobileMenuButton label="Menu" icon={<Bars3Icon />} onClick={onOpen} />
       </Tooltip>
       <Drawer
         isOpen={isOpen}
@@ -75,10 +79,9 @@ const MobileMenuToggle = ({ mobile }) => {
               <VStack spacing={4}>
                 <VStack w="100%">
                   <MobileMenuItem href="/" title="Home" />
-                  <SimpleGrid columns={2} spacing={2} w="100%">
+                  <SimpleGrid columns={1} spacing={2} w="100%">
                     <MobileMenuItem href="/about" title="About" />
                     <MobileMenuItem href="/blog" title="Blog" />
-                    <MobileMenuItem href="/newsletter" title="Newsletter" />
                     <MobileMenuItem href="/bookmarks" title="Bookmarks" />
                     <MobileMenuItem href="/books" title="Books" />
                     <MobileMenuItem href="/tools" title="Tools" />
@@ -86,7 +89,7 @@ const MobileMenuToggle = ({ mobile }) => {
                 </VStack>
 
                 <Divider />
-                <HStack justify="space-between" w="100%">
+                <HStack justifyContent="center" w="100%">
                   <HStack spacing={2}>
                     <Link
                       href="https://twitter.com/wirtzdan/"
@@ -145,7 +148,6 @@ const MobileMenuToggle = ({ mobile }) => {
                       ></IconButton>
                     </Link>
                   </HStack>
-                  <ThemeToggle mobile />
                 </HStack>
               </VStack>
             </DrawerBody>

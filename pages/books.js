@@ -22,7 +22,7 @@ import { getTable } from "@/lib/airtable";
 import Section from "@/components/section";
 import BookCard from "@/components/book-card";
 import BookSuggestion from "@/components/book-suggestion";
-import { BookOpenIcon, HeartIcon } from "@heroicons/react/solid";
+import { BookOpenIcon, HeartIcon } from "@heroicons/react/24/solid";
 import sorter from "sort-isostring";
 import Hero from "@/components/hero";
 
@@ -32,7 +32,11 @@ const Books = ({ books }) => {
   return (
     <PageTransition>
       <VStack spacing={8}>
-        <Hero title="Books"></Hero>
+        <Hero
+          title="Books"
+          subtitle="Take a stroll through my bookshelf"
+          mb={8}
+        ></Hero>
         <Section>
           <Tabs
             variant="soft-rounded"

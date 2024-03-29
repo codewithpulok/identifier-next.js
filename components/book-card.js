@@ -11,9 +11,8 @@ import {
   Image as ChakraImage,
   Icon,
   Link,
+  Image,
 } from "@chakra-ui/react";
-import Image from "next/image";
-import { EyeIcon, StarIcon } from "@heroicons/react/solid";
 import StarIconRating from "./star-rating";
 import { format, render, cancel, register } from "timeago.js";
 
@@ -44,18 +43,17 @@ const BookCard = ({ title, author, rating, isFavorite, cover, dateRead }) => {
       >
         <Box
           rounded="md"
-          h="144px"
+          // h="144px"
           w="90px"
           overflow="hidden"
           shadow="lg"
           position="absolute"
-          bottom={4}
+          top={-4}
+          backgroundColor="red.300"
         >
           <Image
             src={cover ? cover[0].thumbnails.large.url : "/"}
-            height={96}
-            width={60}
-            layout="responsive"
+            fit="cover"
           ></Image>
         </Box>
         <VStack
@@ -63,7 +61,7 @@ const BookCard = ({ title, author, rating, isFavorite, cover, dateRead }) => {
           justify="flex-start"
           spacing={1}
           maxW="lg"
-          pl={24}
+          pl={28}
           h="100%"
         >
           <VStack spacing={0} align="start" flexGrow="1">

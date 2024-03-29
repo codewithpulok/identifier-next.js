@@ -12,7 +12,7 @@ class MyDocument extends Document {
         <Head>
           <link
             rel="preload"
-            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&family=Red+Hat+Text:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Sora:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
             rel="stylesheet"
           />
 
@@ -43,6 +43,10 @@ class MyDocument extends Document {
           <meta content="IE=edge" httpEquiv="X-UA-Compatible" />
           <meta content="#3182CE" name="theme-color" />
           <meta content="#3182CE" name="msapplication-TileColor" />
+          <meta
+            name="impact-site-verification"
+            value="2096415d-8a81-4e03-9a1f-67bcd203a8c2"
+          ></meta>
           <meta
             content="/static/favicons/browserconfig.xml"
             name="msapplication-config"

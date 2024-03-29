@@ -14,7 +14,7 @@ export const SubscribeCard = ({
   title = "From the Desk",
   description = "Helpful tools, thoughtful articles and other findings from the web. From my desk to yours.",
   card = true,
-  image = true,
+  image = false,
   center = false,
 }) => {
   return (
@@ -64,6 +64,7 @@ export const SubscribeCard = ({
           />
         </VStack>
       </HStack>
+
       <Subscribe
         direction={{ base: "column", md: "row" }}
         display={{ base: "block", md: "none" }}

@@ -10,7 +10,6 @@ import {
 } from "@chakra-ui/react";
 import Container from "../components/container";
 import NextLink from "next/link";
-import { PencilAltIcon, MailIcon } from "@heroicons/react/outline";
 import {
   GithubLogo,
   LinkedinLogo,
@@ -26,7 +25,7 @@ const Footer = () => {
     const { href, name, ...rest } = props;
 
     return (
-      <NextLink href={href} passHref>
+      <NextLink href={href} passHref legacyBehavior>
         <Button
           variant="unstyled"
           {...rest}

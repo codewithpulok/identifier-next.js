@@ -1,25 +1,12 @@
 import React from "react";
 import { format } from "timeago.js";
 import {
-  Box,
   VStack,
   Text,
   useColorModeValue,
-  Tag,
   HStack,
-  AspectRatio,
-  Image,
-  Icon,
-  Divider,
-  Center,
+  Heading,
 } from "@chakra-ui/react";
-import {
-  BookOpenIcon,
-  EyeIcon,
-  VideoCameraIcon,
-  PlayIcon,
-  ClockIcon,
-} from "@heroicons/react/solid";
 import Link from "@/components/link";
 import readingTime from "reading-time";
 
@@ -34,7 +21,6 @@ const BlogCard = ({
   views,
   videoLength,
 }) => {
-  console.log("banner →", readingTime(mdx));
   return (
     <Link href={`/blog/${slug}`} unstyled>
       <VStack
@@ -55,7 +41,7 @@ const BlogCard = ({
         height="100%"
         // height={48}
       >
-        {banner ? (
+        {/* {banner ? (
           <Box position="relative" w="100%" rounded="lg">
             <AspectRatio
               ratio={1.85 / 1}
@@ -94,24 +80,20 @@ const BlogCard = ({
               </Center>
             ) : undefined}
           </Box>
-        ) : undefined}
+        ) : undefined} */}
         <VStack
           align="start"
           justifyContent="space-between"
           w="100%"
           h="100%"
-          p={2}
+          p={1}
           pt={0}
         >
           <VStack align="start">
             <HStack>
-              <Text
-                fontSize="lg"
-                fontWeight="bold"
-                color={useColorModeValue("neutral.1100", "neutralD.1100")}
-              >
+              <Heading fontSize="xl" borderBottom="0">
                 {title}
-              </Text>
+              </Heading>
             </HStack>
             {/* <Text
               fontSize="sm"
@@ -120,11 +102,30 @@ const BlogCard = ({
               {summary}
             </Text> */}
           </VStack>
-
           <HStack
             fontSize="sm"
-            fontWeight="400"
-            spacing={1}
+            fontWeight="500"
+            spacing={2}
+            color={useColorModeValue("neutral.900", "neutralD.900")}
+          >
+            <Text>Posted {format(publishDate)}</Text>
+            <Text>·</Text>
+            {type === "Video" ? (
+              <HStack spacing={1}>
+                {/* <Icon as={ClockIcon} w={4} h={4} weight="duotone" /> */}
+                <Text>Video</Text>
+              </HStack>
+            ) : (
+              <HStack spacing={1}>
+                {/* <Icon as={ClockIcon} w={4} h={4} weight="duotone" /> */}
+                <Text>Article</Text>
+              </HStack>
+            )}
+          </HStack>
+          {/*  <HStack
+            fontSize="sm"
+            fontWeight="500"
+            spacing={3}
             color={useColorModeValue("neutral.900", "neutralD.900")}
           >
             {new Date() - new Date(publishDate) < 1000 * 60 * 60 * 24 * 7 ? (
@@ -132,12 +133,9 @@ const BlogCard = ({
                 New
               </Tag>
             ) : undefined}
-            <HStack spacing={1} mr={1}>
-              <Icon as={EyeIcon} w={4} h={4} weight="duotone" />
-              <Text>{views} views</Text>
-            </HStack>
+
             {type === "Video" ? (
-              <HStack>
+              <HStack spacing={1}>
                 <Icon as={ClockIcon} w={4} h={4} weight="duotone" />
                 <Text>{videoLength} min video</Text>
               </HStack>
@@ -147,9 +145,12 @@ const BlogCard = ({
                 <Text>{readingTime(mdx).text}</Text>
               </HStack>
             )}
-
-            {/* <Text>– {format(publishDate)}</Text> */}
-          </HStack>
+            <HStack spacing={1}>
+              <Icon as={EyeIcon} w={4} h={4} weight="duotone" />
+              <Text>{views} views</Text>
+            </HStack>
+             <Text>– {format(publishDate)}</Text>
+          </HStack> */}
         </VStack>
       </VStack>
     </Link>

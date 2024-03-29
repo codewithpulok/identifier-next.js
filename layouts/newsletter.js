@@ -15,7 +15,7 @@ import AuthorCard from "@/components/author-card";
 import Image from "next/image";
 import PageTransition from "../components/page-transitions";
 import ReactPlayer from "react-player/youtube";
-import { PlayIcon } from "@heroicons/react/solid";
+import { PlayIcon } from "@heroicons/react/24/solid";
 import SubscribeCard from "@/components/subscribe-card";
 
 class NewsletterLayout extends React.Component {
@@ -27,13 +27,11 @@ class NewsletterLayout extends React.Component {
         <>
           <Section>
             <BlogSeo
-              url={`https://danielwirtz/blog/${this.props.frontMatter.Slug}`}
-              image={
-                this.props.frontMatter["Social Card"][0].thumbnails.large.url
-              }
-              title={this.props.frontMatter.Subject}
-              publishDate={this.props.frontMatter["Published on"]}
-              {...this.props.frontMatter}
+              url={`https://danielwirtz/blog/${this.props.post.Slug}`}
+              image={this.props.post["Social Card"][0].thumbnails.large.url}
+              title={this.props.post.Subject}
+              publishDate={this.props.post["Published on"]}
+              {...this.props.post}
             />
             <article ref={target}>
               <VStack w="100%" align="left" spacing={6}>
@@ -45,25 +43,25 @@ class NewsletterLayout extends React.Component {
                   lineHeight={0}
                 >
                   <Image
-                    alt={this.props.frontMatter.Subject}
-                    src={
-                      this.props.frontMatter["Social Card"][0].thumbnails.large
-                        .url
-                    }
+                    alt={this.props.post.Subject}
+                    src={this.props.post["Social Card"][0].thumbnails.large.url}
                     width={2240}
                     height={1260}
+                    style={{
+                      maxWidth: "100%",
+                      height: "auto",
+                    }}
                   />
                 </Box>
 
                 <VStack align="stretch" spacing={6} mb={4}>
-                  <Heading as="h1">{this.props.frontMatter.Subject}</Heading>
+                  <Heading as="h1">{this.props.post.Subject}</Heading>
                   <AuthorCard
-                    publishedAt={this.props.frontMatter["Pulished On"]}
+                    publishedAt={this.props.post["Pulished On"]}
                     url={
-                      "https://danielwirtz.com/archive/" +
-                      this.props.frontMatter.slug
+                      "https://danielwirtz.com/archive/" + this.props.post.slug
                     }
-                    readingTime={this.props.frontMatter.readingTime.text}
+                    readingTime={this.props.post.readingTime.text}
                   />
                 </VStack>
               </VStack>
@@ -72,10 +70,7 @@ class NewsletterLayout extends React.Component {
             <div ref={(el) => (this.div = el)}></div>
           </Section>
           <Section mt={8}>
-            <SubscribeCard
-              title="Subscribe to my newsletter"
-              description="Helpful tools, thoughtful articles and other findings from the web. From my desk to yours."
-            />
+            <SubscribeCard title="Subscribe to my blog" description="" />
           </Section>
           <ReadingProgress target={target} />
         </>

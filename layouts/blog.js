@@ -15,7 +15,7 @@ import AuthorCard from "@/components/author-card";
 import Image from "next/image";
 import PageTransition from "../components/page-transitions";
 import ReactPlayer from "react-player/youtube";
-import { PlayIcon } from "@heroicons/react/solid";
+import { PlayIcon } from "@heroicons/react/24/solid";
 import SubscribeCard from "@/components/subscribe-card";
 
 const PlayIconWrapper = () => {
@@ -42,13 +42,13 @@ class BlogLayout extends React.Component {
         <>
           <Section>
             <BlogSeo
-              url={`https://danielwirtz/blog/${this.props.frontMatter.slug}`}
-              image={this.props.frontMatter.banner[0].thumbnails.large.url}
-              {...this.props.frontMatter}
+              url={`https://danielwirtz/blog/${this.props.post.slug}`}
+              image={this.props.post.coverImage}
+              {...this.props.post}
             />
             <article ref={target}>
               <VStack w="100%" align="left" spacing={6}>
-                {this.props.frontMatter.showBanner ? (
+                {this.props.post.showBanner ? (
                   <Box
                     mt={4}
                     rounded="lg"
@@ -57,47 +57,63 @@ class BlogLayout extends React.Component {
                     lineHeight={0}
                   >
                     <Image
-                      alt={this.props.frontMatter.title}
-                      src={
-                        this.props.frontMatter.banner[0].thumbnails.large.url
-                      }
+                      alt={this.props.post.title}
+                      src={this.props.post.coverImage}
                       width={2240}
                       height={1260}
+                      style={{
+                        maxWidth: "100%",
+                        height: "auto",
+                      }}
                     />
                   </Box>
                 ) : undefined}
-                {this.props.frontMatter.videoLink ? (
+                {this.props.post.videoLink ? (
                   <AspectRatio
                     overflow="hidden"
                     rounded="md"
                     my={6}
                     ratio={16 / 9}
                   >
-                    <ReactPlayer
-                      width="100%"
-                      height="100%"
-                      url={this.props.frontMatter.videoLink}
-                      light={
-                        this.props.frontMatter.banner[0].thumbnails.large.url
-                          ? this.props.frontMatter.banner[0].thumbnails.large
-                              .url
-                          : true
-                      }
-                      controls
-                      playing
-                      playIcon={<PlayIconWrapper />}
-                    ></ReactPlayer>
+                    {this.props.post.videoLink.includes("jmp.sh") ||
+                    this.props.post.videoLink.includes("facilitator.school") ? (
+                      <iframe
+                        src={this.props.post.videoLink}
+                        frameborder="0"
+                        webkitallowfullscreen
+                        mozallowfullscreen
+                        allowfullscreen
+                        style={{
+                          position: "absolute",
+                          top: "0",
+                          left: "0",
+                          width: "100%",
+                          height: "100%",
+                        }}
+                      ></iframe>
+                    ) : (
+                      <ReactPlayer
+                        width="100%"
+                        height="100%"
+                        url={this.props.post.videoLink}
+                        light={
+                          this.props.post.coverImage
+                            ? this.props.post.coverImage
+                            : true
+                        }
+                        controls
+                        playing
+                        playIcon={<PlayIconWrapper />}
+                      ></ReactPlayer>
+                    )}
                   </AspectRatio>
                 ) : undefined}
                 <VStack align="stretch" spacing={6} mb={4}>
-                  <Heading as="h1">{this.props.frontMatter.title}</Heading>
+                  <Heading as="h1">{this.props.post.title}</Heading>
                   <AuthorCard
-                    publishedAt={this.props.frontMatter.publishDate}
-                    url={
-                      "https://danielwirtz.com/blog/" +
-                      this.props.frontMatter.slug
-                    }
-                    readingTime={this.props.frontMatter.readingTime.text}
+                    publishedAt={this.props.post.publishDate}
+                    url={"https://danielwirtz.com/blog/" + this.props.post.slug}
+                    // readingTime={this.props.post.readingTime.text}
                   />
                 </VStack>
               </VStack>
@@ -105,16 +121,13 @@ class BlogLayout extends React.Component {
             </article>
 
             {/* <TwitterCard
-              title={this.props.frontMatter.title}
-              slug={this.props.frontMatter.slug}
+              title={this.props.post.title}
+              slug={this.props.post.slug}
             /> */}
             <div ref={(el) => (this.div = el)}></div>
           </Section>
           <Section mt={8}>
-            <SubscribeCard
-              title="Subscribe to my newsletter"
-              description="Helpful tools, thoughtful articles and other findings from the web. From my desk to yours."
-            />
+            <SubscribeCard title="Subscribe to my blog" description="" />
           </Section>
           <ReadingProgress target={target} />
         </>

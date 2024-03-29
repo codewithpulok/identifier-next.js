@@ -53,7 +53,6 @@ export default function Newsletter({ posts }) {
                   overflow="hidden"
                   boxShadow="lg"
                   mt={8}
-                  w="100%"
                 >
                   <Box
                     w="100%"
@@ -167,8 +166,6 @@ export default function Newsletter({ posts }) {
 
 export async function getStaticProps() {
   const posts = await getAllNewsletters();
-
-  console.log("posts →", posts);
 
   return {
     props: {
