@@ -13,8 +13,9 @@ import {
   Box,
   VStack,
   Text,
+  Icon,
 } from "@chakra-ui/react";
-import { RssIcon } from "@heroicons/react/solid";
+import { RssIcon } from "@heroicons/react/24/solid";
 import { useForm } from "react-hook-form";
 
 const Subscribe = ({ direction, ...props }) => {
@@ -24,11 +25,15 @@ const Subscribe = ({ direction, ...props }) => {
   const {
     register,
     handleSubmit,
-    errors,
-    formState: { isSubmitting, isSubmitSuccessful, isValid },
+
+    formState: { isSubmitting, isSubmitSuccessful, isValid, errors },
   } = useForm({
     mode: "onChange",
   });
+
+  function ChakraRssIcon() {
+    return <Icon as={RssIcon} />;
+  }
 
   const onSubmit = async (data, e) => {
     const res = await fetch("/api/addSubscriber", {
@@ -63,10 +68,9 @@ const Subscribe = ({ direction, ...props }) => {
             <Stack spacing={2} direction={direction} justify="start" w="full">
               <FormControl w="unset">
                 <Input
-                  name="email_address"
+                  {...register("email_address", { required: true })}
                   placeholder="you@email.com"
                   type="email"
-                  ref={register({ required: true })}
                   isDisabled={isSuccessful}
                   isLoading={isSubmitSuccessful}
                   rounded="lg"
@@ -80,14 +84,13 @@ const Subscribe = ({ direction, ...props }) => {
                 )}
               </FormControl>
               <Button
-                mt={4}
                 colorScheme="blue"
                 type="submit"
                 minW={10}
                 isDisabled={isSuccessful}
                 // isDisabled={!isValid}
+                leftIcon={<ChakraRssIcon />}
                 isLoading={isSubmitting}
-                // leftIcon={<RssIcon size={20} />}
                 rounded="lg"
                 // size={{ base: "md", md: "" }}
               >

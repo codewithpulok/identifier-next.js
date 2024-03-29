@@ -30,11 +30,9 @@ import ThemeToggle from "./theme-toggle";
 import {
   BookmarkIcon,
   BookOpenIcon,
-  ChevronDownIcon,
-  LightningBoltIcon,
-  MenuIcon,
-  DotsHorizontalIcon,
-} from "@heroicons/react/solid";
+  BoltIcon,
+} from "@heroicons/react/24/solid";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import AvatarNavigation from "./avatar-navigation";
 
@@ -54,7 +52,7 @@ function NavLink(props) {
   }
 
   return (
-    <NextLink href={href} passHref>
+    <NextLink href={href} passHref legacyBehavior>
       <Button
         aria-current={isActive ? "page" : undefined}
         variant="ghost"
@@ -78,6 +76,16 @@ function NavLink(props) {
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const closeTimeoutRef = React.useRef();
+
+  const delayedClose = () => {
+    closeTimeoutRef.current = setTimeout(onClose, 200); // delay in ms
+  };
+
+  const cancelDelayedClose = () => {
+    clearTimeout(closeTimeoutRef.current);
+  };
+
   return (
     <Box
       bg={useColorModeValue("white", "neutralD.100")}
@@ -96,23 +104,32 @@ const Header = () => {
             <HStack ml={-4} spacing={2}>
               <NavLink href="/blog" name="Blog" />
               <NavLink href="/about" name="About" />
-              <Menu isOpen={isOpen}>
+              <Menu isOpen={isOpen} onClose={onClose}>
                 <MenuButton
-                  onMouseEnter={onOpen}
-                  onMouseLeave={onClose}
+                  onMouseOver={onOpen}
+                  onClick={isOpen ? onClose : onOpen}
+                  onMouseLeave={delayedClose}
+                  onMouseEnter={cancelDelayedClose}
                   as={Button}
                   rightIcon={<Icon as={ChevronDownIcon} />}
+                  cursor="unset"
+                  bg={useColorModeValue("white", "neutralD.100")}
+                  _hover={{
+                    bg: useColorModeValue("neutral.200", "neutralD.200"),
+                  }}
+                  _active={useColorModeValue("neutral.200", "neutralD.200")}
                 >
                   Lists
                 </MenuButton>
                 <MenuList
                   bg={useColorModeValue("white", "neutralD.100")}
                   borderColor={useColorModeValue("neutral.400", "neutralD.400")}
-                  onMouseEnter={onOpen}
                   onMouseLeave={onClose}
+                  onMouseEnter={cancelDelayedClose}
                 >
-                  <Link href="/books">
+                  <Link href="/books" legacyBehavior>
                     <MenuItem
+                      bg={useColorModeValue("white", "neutralD.100")}
                       _hover={{
                         bg: useColorModeValue("neutral.200", "neutralD.200"),
                       }}
@@ -127,8 +144,9 @@ const Header = () => {
                       </HStack>
                     </MenuItem>
                   </Link>
-                  <Link href="/bookmarks">
+                  <Link href="/bookmarks" legacyBehavior>
                     <MenuItem
+                      bg={useColorModeValue("white", "neutralD.100")}
                       _hover={{
                         bg: useColorModeValue("neutral.200", "neutralD.200"),
                       }}
@@ -143,15 +161,16 @@ const Header = () => {
                       </HStack>
                     </MenuItem>
                   </Link>
-                  <Link href="/tools">
+                  <Link href="/tools" legacyBehavior>
                     <MenuItem
+                      bg={useColorModeValue("white", "neutralD.100")}
                       _hover={{
                         bg: useColorModeValue("neutral.200", "neutralD.200"),
                       }}
                     >
                       <HStack>
                         <Icon
-                          as={LightningBoltIcon}
+                          as={BoltIcon}
                           size={18}
                           color={useColorModeValue("blue.500", "blue.200")}
                         />

@@ -26,7 +26,7 @@ import {
   BookOpenIcon,
   DesktopComputer,
   HeartIcon,
-} from "@heroicons/react/solid";
+} from "@heroicons/react/24/solid";
 import sorter from "sort-isostring";
 import {
   AndroidLogo,
@@ -207,7 +207,7 @@ export async function getStaticProps() {
     props: {
       tools,
     },
-    revalidate: 600,
+    revalidate: 10,
   };
 }
 

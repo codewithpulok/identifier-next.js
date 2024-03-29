@@ -13,7 +13,6 @@ import {
   Link,
   Image,
 } from "@chakra-ui/react";
-import { EyeIcon, StarIcon } from "@heroicons/react/solid";
 import StarIconRating from "./star-rating";
 import { format, render, cancel, register } from "timeago.js";
 
@@ -62,7 +61,7 @@ const BookCard = ({ title, author, rating, isFavorite, cover, dateRead }) => {
           justify="flex-start"
           spacing={1}
           maxW="lg"
-          pl={24}
+          pl={28}
           h="100%"
         >
           <VStack spacing={0} align="start" flexGrow="1">

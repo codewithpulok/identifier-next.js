@@ -20,22 +20,22 @@ import {
   VideoCameraIcon,
   PlayIcon,
   ClockIcon,
-} from "@heroicons/react/solid";
+} from "@heroicons/react/24/solid";
 import Link from "@/components/link";
 import readingTime from "reading-time";
 
 const BlogListItem = ({
   slug,
   publishDate,
-  summary,
+  excerpt,
   title,
-  banner,
-  type,
+  coverImage,
+  // type,
   mdx,
-  views,
-  videoLength,
+  // views,
+  // videoLength,
+  videoLink,
 }) => {
-  console.log("banner →", readingTime(mdx));
   return (
     <Link href={`/blog/${slug}`} unstyled>
       <HStack
@@ -79,7 +79,7 @@ const BlogListItem = ({
           >
             <Text>Posted {format(publishDate)}</Text>
             <Text>·</Text>
-            {type === "Video" ? (
+            {videoLink ? (
               <HStack spacing={1}>
                 {/* <Icon as={ClockIcon} w={4} h={4} weight="duotone" /> */}
                 <Text>Video</Text>
